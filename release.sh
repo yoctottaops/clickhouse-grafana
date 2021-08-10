@@ -20,7 +20,7 @@ chmod +rx ./dist
 chmod +rx -R ./dist/vertamedia-clickhouse-plugin*
 git add .
 git diff-index --quiet HEAD || git commit -m "prepare to new release, $(grep current_version .bumpversion.cfg)"
-/home/lap079/.local/bin/bump2version --verbose $1
+# bump2version --verbose $1
 docker-compose run --rm plugin_signer
 git add .
 git commit -s -m "sign plugin, $(grep current_version .bumpversion.cfg)"
