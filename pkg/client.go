@@ -43,6 +43,10 @@ func (client *ClickHouseClient) Query(query string) (*Response, error) {
 		return onErr(err)
 	}
 
+	// Remove Authorization header since behind a nginx proxy with Authorization api key set grafana passes the same key to clickhouse
+	// this fails in clickhouse.
+	req.Header.Del("Authorization")
+
 	if client.settings.Instance.BasicAuthEnabled {
 		password, _ := client.settings.Instance.DecryptedSecureJSONData["basicAuthPassword"]
 		req.SetBasicAuth(client.settings.Instance.BasicAuthUser, password)
